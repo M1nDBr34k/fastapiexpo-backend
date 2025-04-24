@@ -28,6 +28,7 @@ app = FastAPI()
 # Enable CORS for local development
 origins = [
     "http://localhost",
+    "http://localhost:8084",
     "http://localhost:19006",  # Expo default
     "http://127.0.0.1",
     "http://127.0.0.1:19006",
