@@ -116,11 +116,11 @@ async def update_task(task_id: str, updated_task: Task):
 
 @app.delete("/tasks/{task_id}")
 async def delete_task(task_id: str):
-    query = tasks.delete().where(tasks.c.id == task_id)
-    result = await database.execute(query)
-    # Check if the task exists
+    # Check if the task exists before deleting
     select_query = tasks.select().where(tasks.c.id == task_id)
     task = await database.fetch_one(select_query)
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
+    query = tasks.delete().where(tasks.c.id == task_id)
+    await database.execute(query)
     return {"detail": "Task deleted"}
